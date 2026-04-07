@@ -25,7 +25,7 @@ public class Main {
             int choice = scanner.nextInt();
             scanner.nextLine(); // مهم لتنظيف الـ input
 
-            //Add Product
+            // Add Product
             if (choice == 1) {
 
                 System.out.print("Enter ID: ");
@@ -45,7 +45,7 @@ public class Main {
                 System.out.print("Enter Category: ");
                 String category = scanner.nextLine();
 
-                //إدخال التواريخ من المستخدم
+                // إدخال التواريخ من المستخدم
                 System.out.print("Enter production date (YYYY-MM-DD): ");
                 String prodDateStr = scanner.nextLine();
 
@@ -62,7 +62,7 @@ public class Main {
                 service.addProduct(product);
             }
 
-            //Delete Product
+            // Delete Product
             else if (choice == 2) {
 
                 System.out.print("Enter Product ID to delete: ");
