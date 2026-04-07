@@ -1,10 +1,10 @@
 package main;
 
-import main.model.Product;
-import main.service.ProductService;
-
 import java.time.LocalDate;
 import java.util.Scanner;
+import main.model.Product;
+import main.service.ClientService;
+import main.service.ProductService;
 
 public class Main {
 
@@ -12,15 +12,18 @@ public class Main {
 
         ProductService service = new ProductService();
         Scanner scanner = new Scanner(System.in);
-
+        ClientService clientService = new ClientService();
         while (true) {
-
-            System.out.println("\n=== Inventory System ===");
-            System.out.println("1. Add Product");
-            System.out.println("2. Delete Product");
-            System.out.println("3. View All Products");
-            System.out.println("4. Exit");
-            System.out.print("Choose option: ");
+        System.out.println("\n=== Inventory System ===");
+        System.out.println("1. Add Product");
+        System.out.println("2. Delete Product");
+        System.out.println("3. View All Products");
+        System.out.println("4. Register Client");
+        System.out.println("5. Login Client");
+        System.out.println("6. Edit Client Data");
+        System.out.println("7. Create Order");
+        System.out.println("8. Exit");
+        System.out.print("Choose option: ");
 
             int choice = scanner.nextInt();
             scanner.nextLine(); // مهم لتنظيف الـ input
@@ -76,14 +79,29 @@ public class Main {
 
                 System.out.println(service.getAllProducts());
             }
-
-            // Exit
+            // Register Client
             else if (choice == 4) {
-
-                System.out.println("Program ended");
+                clientService.register();
+            }
+            // Login Client
+            else if (choice == 5) {
+                clientService.login(); // تسجيل دخول العميل
+            }
+            // Edit Client Data
+            else if (choice == 6) {
+                 clientService.editClientData();
+            }
+            // Create Order
+            else if (choice == 7) {
+                  clientService.createOrder();
+       
+            }
+            // Exit
+             else if (choice == 8) {
+                
+                System.out.println("Exiting...");
                 break;
             }
-
             else {
                 System.out.println("Invalid choice");
             }
