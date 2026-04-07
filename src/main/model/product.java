@@ -1,90 +1,96 @@
-package main.model; // بنحدد اسم الباكدج (المسار) ولازم يكون نفس مكان الملف في الفولدرات بالظبط
-import java.time.LocalDate; // بنستورد كلاس LocalDate علشان نتعامل مع التواريخ (انتاج / انتهاء)
+//=========================================================================
 
-public class Product { // تعريف كلاس اسمه Product بيمثل المنتج
+//                  This File Complete No one Edit on it  (Abdelrhman Taha)
 
-    private int id; // رقم مميز لكل منتج
-    private String name; // اسم المنتج
-    private int quantity; // الكمية الموجودة في المخزن
-    private double price; // سعر المنتج
-    private String category; // نوع المنتج (تصنيف)
-    private LocalDate productionDate; // تاريخ انتاج المنتج
-    private LocalDate expiryDate; // تاريخ انتهاء المنتج
+//=========================================================================
+package main.model;
+
+import java.time.LocalDate;
+
+public class Product {
+
+    private int id;
+    private String name;
+    private int quantity;
+    private double price;
+    private String category;
+    private LocalDate productionDate;
+    private LocalDate expiryDate;
 
     public Product(int id, String name, int quantity, double price, String category, LocalDate productionDate,
-            LocalDate expiryDate) { // الكونستركتور اللي بنعمل بيه object جديد من المنتج
+            LocalDate expiryDate) {
 
-        this.id = id; // بنخزن قيمة ال id في المتغير الداخلي
-        this.name = name; // بنخزن اسم المنتج
-        this.quantity = quantity; // بنخزن الكمية
-        this.price = price; // بنخزن السعر
-        this.category = category; // بنخزن التصنيف
-        this.productionDate = productionDate; // بنخزن تاريخ الانتاج
-        this.expiryDate = expiryDate; // بنخزن تاريخ الانتهاء
+        this.id = id;
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+        this.category = category;
+        this.productionDate = productionDate;
+        this.expiryDate = expiryDate;
 
     }
 
-    public int getId() { // ميثود بترجع id المنتج
-        return id; // بيرجع قيمة ال id
+    public int getId() {
+        return id;
     }
 
-    public String getName() { // ميثود بترجع اسم المنتج
-        return name; // بيرجع الاسم
+    public String getName() {
+        return name;
     }
 
-    public int getQuantity() { // ميثود بترجع الكمية
-        return quantity; // بيرجع الكمية
+    public int getQuantity() {
+        return quantity;
     }
 
-    public double getPrice() { // ميثود بترجع السعر
-        return price; // بيرجع السعر
+    public double getPrice() {
+        return price;
     }
 
-    public String getCategory() { // ميثود بترجع التصنيف
-        return category; // بيرجع التصنيف
+    public String getCategory() {
+        return category;
     }
 
-    public LocalDate getProductionDate() { // ميثود بترجع تاريخ الانتاج
-        return productionDate; // بيرجع التاريخ
+    public LocalDate getProductionDate() {
+        return productionDate;
     }
 
-    public LocalDate getExpiryDate() { // ميثود بترجع تاريخ الانتهاء
-        return expiryDate; // بيرجع التاريخ
+    public LocalDate getExpiryDate() {
+        return expiryDate;
     }
 
-    public void setId(int id) { // ميثود لتعديل id
-        this.id = id; // بيغير قيمة ال id
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setName(String name) { // ميثود لتعديل الاسم
-        this.name = name; // بيغير الاسم
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setQuantity(int quantity) { // ميثود لتعديل الكمية
-        this.quantity = quantity; // بيغير الكمية
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
-    public void setPrice(double price) { // ميثود لتعديل السعر
-        this.price = price; // بيغير السعر
+    public void setPrice(double price) {
+        this.price = price;
     }
 
-    public void setCategory(String category) { // ميثود لتعديل التصنيف
-        this.category = category; // بيغير التصنيف
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public void setProductionDate(LocalDate productionDate) { // ميثود لتعديل تاريخ الانتاج
-        this.productionDate = productionDate; // بيغير التاريخ
+    public void setProductionDate(LocalDate productionDate) {
+        this.productionDate = productionDate;
     }
 
-    public void setExpiryDate(LocalDate expiryDate) { // ميثود لتعديل تاريخ الانتهاء
-        this.expiryDate = expiryDate; // بيغير التاريخ
+    public void setExpiryDate(LocalDate expiryDate) {
+        this.expiryDate = expiryDate;
     }
 
-    @Override // بنعمل override لدالة toString اللي جاية من Object
-    public String toString() { // دالة بترجع شكل المنتج كنص
+    @Override
+    public String toString() {
         return "Product{" + "id=" + id + ", name='" + name + '\'' + ", quantity=" + quantity + ", price=" + price
                 + ", category='" + category + '\'' + ", productionDate=" + productionDate + ", expiryDate=" + expiryDate
-                + '}'; // بيرجع نص منظم فيه كل بيانات المنتج
+                + '}';
     }
 
 }

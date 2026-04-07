@@ -1,0 +1,227 @@
+//=========================================================================
+
+//                  This File Complete No one Edit on it   (Abdelrhman Taha)
+
+//=========================================================================
+package main.gui;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.event.*;
+import java.time.LocalDate;
+import java.util.List;
+
+import main.model.Product;
+import main.service.ProductService;
+
+public class ProductFrame extends JFrame {
+
+    ProductService productService = new ProductService();
+
+    JTextField idField, nameField, quantityField, priceField, categoryField, productionField, expiryField;
+    JTable table;
+    DefaultTableModel model;
+
+    public ProductFrame() {
+
+        setTitle("Product Management");
+        setSize(900,650);
+        setLayout(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        addLabel("ID:", 30);
+        idField = addField(150, 30);
+
+        addLabel("Name:", 70);
+        nameField = addField(150, 70);
+
+        addLabel("Quantity:", 110);
+        quantityField = addField(150, 110);
+
+        addLabel("Price:", 150);
+        priceField = addField(150, 150);
+
+        addLabel("Category:", 190);
+        categoryField = addField(150, 190);
+
+        addLabel("Production:", 230);
+        productionField = addField(150, 230);
+
+        addLabel("Expiry:", 270);
+        expiryField = addField(150, 270);
+
+        JButton addBtn = new JButton("Add");
+        addBtn.setBounds(400, 30, 150, 30);
+        add(addBtn);
+
+        JButton updateBtn = new JButton("Update");
+        updateBtn.setBounds(400, 70, 150, 30);
+        add(updateBtn);
+
+        JButton deleteBtn = new JButton("Delete");
+        deleteBtn.setBounds(400, 110, 150, 30);
+        add(deleteBtn);
+
+        JButton searchNameBtn = new JButton("Search Name");
+        searchNameBtn.setBounds(400, 150, 150, 30);
+        add(searchNameBtn);
+
+        JButton searchCatBtn = new JButton("Search Category");
+        searchCatBtn.setBounds(400, 190, 150, 30);
+        add(searchCatBtn);
+
+        JButton searchDateBtn = new JButton("Search Expiry");
+        searchDateBtn.setBounds(400, 230, 150, 30);
+        add(searchDateBtn);
+
+        JButton alertBtn = new JButton("Check Alerts");
+        alertBtn.setBounds(400, 270, 150, 30);
+        add(alertBtn);
+
+        JButton refreshBtn = new JButton("Refresh");
+        refreshBtn.setBounds(400, 310, 150, 30);
+        add(refreshBtn);
+
+        model = new DefaultTableModel();
+        model.addColumn("ID");
+        model.addColumn("Name");
+        model.addColumn("Qty");
+        model.addColumn("Price");
+        model.addColumn("Category");
+        model.addColumn("Production");
+        model.addColumn("Expiry");
+
+        table = new JTable(model);
+        JScrollPane pane = new JScrollPane(table);
+        pane.setBounds(30, 370, 800, 200);
+        add(pane);
+
+        addBtn.addActionListener(e -> {
+            try {
+                Product p = new Product(
+                        Integer.parseInt(idField.getText()),
+                        nameField.getText(),
+                        Integer.parseInt(quantityField.getText()),
+                        Double.parseDouble(priceField.getText()),
+                        categoryField.getText(),
+                        LocalDate.parse(productionField.getText()),
+                        LocalDate.parse(expiryField.getText())
+                );
+
+                String msg = productService.addProduct(p);
+                JOptionPane.showMessageDialog(this, msg);
+
+                loadTable(productService.getAllProducts());
+
+            } catch(Exception ex) {
+                JOptionPane.showMessageDialog(this, "Check input and date format YYYY-MM-DD");
+            }
+        });
+
+        updateBtn.addActionListener(e -> {
+            String msg = productService.updateProduct(
+                    Integer.parseInt(idField.getText()),
+                    nameField.getText(),
+                    Integer.parseInt(quantityField.getText()),
+                    Double.parseDouble(priceField.getText())
+            );
+
+            JOptionPane.showMessageDialog(this, msg);
+            loadTable(productService.getAllProducts());
+        });
+
+        deleteBtn.addActionListener(e -> {
+            String msg = productService.deleteProduct(Integer.parseInt(idField.getText()));
+            JOptionPane.showMessageDialog(this, msg);
+
+            loadTable(productService.getAllProducts());
+        });
+
+        searchNameBtn.addActionListener(e -> {
+            loadTable(productService.searchByName(nameField.getText()));
+        });
+
+        searchCatBtn.addActionListener(e -> {
+            loadTable(productService.searchByCategory(categoryField.getText()));
+        });
+
+        searchDateBtn.addActionListener(e -> {
+            try {
+                LocalDate d = LocalDate.parse(expiryField.getText());
+                loadTable(productService.searchByExpiryDate(d));
+            } catch(Exception ex) {
+                JOptionPane.showMessageDialog(this, "Wrong date format");
+            }
+        });
+
+        alertBtn.addActionListener(e -> {
+
+            List<Product> low = productService.checkLowStock();
+            List<Product> exp = productService.checkExpiry();
+
+            String msg = "";
+
+            for(Product p : low) {
+                msg += "Low Stock: " + p.getName() + " (Qty=" + p.getQuantity() + ")\n";
+            }
+
+            for(Product p : exp) {
+                msg += "Expiring Soon: " + p.getName() + "\n";
+            }
+
+            if(msg.isEmpty()) {
+                msg = "No Alerts";
+            }
+
+            JOptionPane.showMessageDialog(this, msg);
+        });
+
+        refreshBtn.addActionListener(e -> loadTable(productService.getAllProducts()));
+
+        table.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                int row = table.getSelectedRow();
+
+                idField.setText(model.getValueAt(row,0).toString());
+                nameField.setText(model.getValueAt(row,1).toString());
+                quantityField.setText(model.getValueAt(row,2).toString());
+                priceField.setText(model.getValueAt(row,3).toString());
+                categoryField.setText(model.getValueAt(row,4).toString());
+                productionField.setText(model.getValueAt(row,5).toString());
+                expiryField.setText(model.getValueAt(row,6).toString());
+            }
+        });
+
+        setVisible(true);
+        loadTable(productService.getAllProducts());
+    }
+
+    private void addLabel(String text, int y) {
+        JLabel label = new JLabel(text);
+        label.setBounds(30, y, 150, 30);
+        add(label);
+    }
+
+    private JTextField addField(int x, int y) {
+        JTextField field = new JTextField();
+        field.setBounds(x, y, 150, 30);
+        add(field);
+        return field;
+    }
+
+    private void loadTable(List<Product> list) {
+        model.setRowCount(0);
+
+        for(Product p : list) {
+            model.addRow(new Object[]{
+                    p.getId(),
+                    p.getName(),
+                    p.getQuantity(),
+                    p.getPrice(),
+                    p.getCategory(),
+                    p.getProductionDate(),
+                    p.getExpiryDate()
+            });
+        }
+    }
+}
