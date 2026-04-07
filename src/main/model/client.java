@@ -1,25 +1,25 @@
-package main.model; // الباكدج بتاع الكلاس (مكانه في المشروع)
+package main.model; 
 
-public class client { // كلاس يمثل العميل
+public class client { 
 
-    private String username; // متغير لتخزين اسم المستخدم
-    private String password; // متغير لتخزين كلمة المرور
+    private String username; 
+    private String password; 
 
-    public client(String username, String password) { // constructor لإنشاء عميل جديد
-        this.username = username; // تخزين الاسم داخل الكائن
-        this.password = password; // تخزين الباسورد داخل الكائن
+    public client(String username, String password) { 
+        this.username = username; 
+        this.password = password; 
     }
 
-    public String getUsername() { // ميثود ترجع اسم المستخدم
-        return username; // ترجيع الاسم
+    public String getUsername() { 
+        return username; 
     }
 
-    public String getPassword() { // ميثود ترجع الباسورد
-        return password; // ترجيع الباسورد
+    public String getPassword() { 
+        return password;
     }
 
-    public void editData(String newUsername, String newPassword) { // تعديل بيانات العميل
-        this.username = newUsername; // تحديث الاسم
-        this.password = newPassword; // تحديث الباسورد
+    public void editData(String newUsername, String newPassword) { 
+        this.username = newUsername; 
+        this.password = newPassword; 
     }
 }

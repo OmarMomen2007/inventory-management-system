@@ -1,25 +1,25 @@
 package main.service;
 
-import java.time.LocalDate; // ليست
-import java.util.ArrayList; // إدخال
-import java.util.Scanner; // تواريخ
-import main.model.Product; // كلاس العميل
-import main.model.client; // كلاس الطلب
-import main.model.order; // كلاس المنتج
+import java.time.LocalDate; 
+import java.util.ArrayList; 
+import java.util.Scanner; 
+import main.model.Product; 
+import main.model.client; 
+import main.model.order; 
 
-public class ClientService { // كلاس خدمات العميل
+public class ClientService { 
 
-    private ArrayList<client> clients = new ArrayList<>(); // ليست العملاء
-    private ArrayList<order> orders = new ArrayList<>(); // ليست الطلبات
-    private ArrayList<Product> products = new ArrayList<>(); // ليست المنتجات
+    private ArrayList<client> clients = new ArrayList<>(); 
+    private ArrayList<order> orders = new ArrayList<>(); 
+    private ArrayList<Product> products = new ArrayList<>(); 
 
-    private Scanner input = new Scanner(System.in); // قراءة من المستخدم
-    private client currentClient = null; // المستخدم الحالي
-    private int nextOrderId = 1; // رقم الطلب
+    private Scanner input = new Scanner(System.in); 
+    private client currentClient = null; 
+    private int nextOrderId = 1; 
 
     public ClientService() { // constructor
 
-        // منتجات تجريبية
+       
         products.add(new Product(1, "Milk", 10, 20.0, "Dairy",
                 LocalDate.of(2024, 1, 1),
                 LocalDate.of(2024, 2, 1)));
@@ -52,7 +52,7 @@ public class ClientService { // كلاس خدمات العميل
     // ================= LOGIN =================
     public void login() {
 
-        while (true) { // يفضل يطلب لحد ما يدخل صح
+        while (true) { 
 
             System.out.print("Enter username: ");
             String username = input.nextLine();
@@ -139,12 +139,12 @@ public class ClientService { // كلاس خدمات العميل
             return;
         }
 
-        // إنشاء الطلب
+        
         order newOrder = new order(nextOrderId++, currentClient.getUsername(), selected, qty);
 
         orders.add(newOrder);
 
-        // تقليل الكمية
+        
         selected.setQuantity(selected.getQuantity() - qty);
 
         System.out.println("Order created successfully!");

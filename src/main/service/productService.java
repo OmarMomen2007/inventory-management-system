@@ -1,127 +1,126 @@
-package main.service; // دي الباكدج ولازم تطابق مكان الملف في الفولدر
+//=========================================================================
 
-import main.model.Product; // بنستورد كلاس Product علشان نستخدمه هنا
+//                  This File Complete No one Edit on it   (Abdelrhman Taha)
 
-import java.util.ArrayList; // علشان نستخدم ArrayList لتخزين المنتجات
-import java.util.List; // علشان نستخدم List (interface)
+//=========================================================================
+package main.service;
 
-public class ProductService { // تعريف كلاس مسؤول عن إدارة المنتجات
+import main.model.Product;
+import java.util.ArrayList;
+import java.util.List;
 
-    private List<Product> products = new ArrayList<>(); // ليستة بنخزن فيها كل المنتجات
+public class ProductService {
 
-    //إضافة منتج
-    public void addProduct(Product product) { // ميثود بتستقبل object من Product
+    private static List<Product> products = new ArrayList<>();
 
-        for (Product p : products) { // بنلف على كل المنتجات الموجودة
-            if (p.getId() == product.getId()) { // لو فيه منتج بنفس ال id
-                System.out.println("Product with this ID already exists"); // نطبع رسالة
-                return; // نخرج من الميثود ومش نضيف المنتج
+    public String addProduct(Product product) {
+
+        for (Product p : products) {
+            if (p.getId() == product.getId()) {
+
+                return "Product with this ID already exists";
             }
         }
 
-        products.add(product); // بنضيف المنتج في الليستة
-        System.out.println("Product added successfully"); // رسالة تأكيد
+        products.add(product);
+        return "Product added successfully";
     }
 
-    //عرض كل المنتجات
-    public List<Product> getAllProducts() { // ميثود بترجع كل المنتجات
-        return products; // بيرجع الليستة
+    public List<Product> getAllProducts() {
+        return products;
     }
 
-    //تعديل منتج باستخدام id
-    public void updateProduct(int id, String name, int quantity, double price) { // ميثود لتعديل المنتج
+    public String updateProduct(int id, String name, int quantity, double price) {
 
-        for (Product p : products) { // بنلف على كل المنتجات
-            if (p.getId() == id) { // لو لقينا المنتج المطلوب
+        for (Product p : products) {
+            if (p.getId() == id) {
 
-                p.setName(name); // نغير الاسم
-                p.setQuantity(quantity); // نغير الكمية
-                p.setPrice(price); // نغير السعر
+                p.setName(name);
+                p.setQuantity(quantity);
+                p.setPrice(price);
 
-                System.out.println("Product updated successfully"); // رسالة نجاح
-                return; // نخرج بعد التعديل
+                
+                return "Product updated successfully";
             }
         }
 
-        System.out.println("Product not found"); // لو ملقيناش المنتج
+        return "Product not found";
     }
 
-    //حذف منتج باستخدام id
-    public void deleteProduct(int id) { // ميثود لحذف المنتج
+    public String deleteProduct(int id) {
 
-        for (Product p : products) { // بنلف على المنتجات
-            if (p.getId() == id) { // لو لقينا المنتج
-
-                products.remove(p); // نحذفه من الليستة
-                System.out.println("Product deleted successfully"); // رسالة نجاح
-                return; // نخرج
+        for (int i = 0; i < products.size(); i++) {
+            if (products.get(i).getId() == id) {
+                products.remove(i);
+               
+                return  "Product deleted successfully";
             }
         }
 
-        System.out.println("Product not found"); // لو مش موجود
+        return "Product not found";
     }
 
-    //البحث بالاسم
-    public List<Product> searchByName(String name) { // ميثود ترجع منتجات بالاسم
+    public List<Product> searchByName(String name) {
 
-        List<Product> result = new ArrayList<>(); // ليستة جديدة نحط فيها النتائج
+        List<Product> result = new ArrayList<>();
 
-        for (Product p : products) { // بنلف على كل المنتجات
-            if (p.getName().toLowerCase().contains(name.toLowerCase())) { // لو الاسم فيه نفس النص
-                result.add(p); // نضيفه في النتيجة
+        for (Product p : products) {
+            if (p.getName().toLowerCase().contains(name.toLowerCase())) {
+                result.add(p);
             }
         }
 
-        return result; // نرجع النتائج
+        return result;
     }
 
-    //البحث بالتصنيف
-    public List<Product> searchByCategory(String category) { // ميثود ترجع حسب التصنيف
+    public List<Product> searchByCategory(String category) {
 
-        List<Product> result = new ArrayList<>(); // ليستة للنتائج
+        List<Product> result = new ArrayList<>();
 
-        for (Product p : products) { // بنلف على المنتجات
-            if (p.getCategory().equalsIgnoreCase(category)) { // لو نفس التصنيف
-                result.add(p); // نضيفه
+        for (Product p : products) {
+            if (p.getCategory().equalsIgnoreCase(category)) {
+                result.add(p);
             }
         }
 
-        return result; // نرجع النتيجة
+        return result;
     }
 
-    //البحث بتاريخ الانتهاء
-    public List<Product> searchByExpiryDate(java.time.LocalDate date) { // ميثود للبحث بالتاريخ
+    public List<Product> searchByExpiryDate(java.time.LocalDate date) {
 
-        List<Product> result = new ArrayList<>(); // ليستة للنتائج
+        List<Product> result = new ArrayList<>();
 
-        for (Product p : products) { // بنلف على المنتجات
-            if (p.getExpiryDate().isBefore(date)) { // لو تاريخ الانتهاء قبل التاريخ المحدد
-                result.add(p); // نضيفه
+        for (Product p : products) {
+            if (p.getExpiryDate().isBefore(date)) {
+                result.add(p);
             }
         }
 
-        return result; // نرجع النتيجة
+        return result;
     }
 
-    //تنبيه المنتجات القريبة من الانتهاء
-    public void checkExpiry() { // ميثود للتنبيه
+    public List<Product> checkExpiry() {
 
-        java.time.LocalDate today = java.time.LocalDate.now(); // بنجيب تاريخ اليوم
+        List<Product> result = new ArrayList<>();
+        java.time.LocalDate today = java.time.LocalDate.now();
 
-        for (Product p : products) { // بنلف على المنتجات
-            if (p.getExpiryDate().isBefore(today.plusDays(7))) { // لو فاضل أقل من 7 أيام
-                System.out.println("Product قريب من الانتهاء: " + p.getName()); // نطبع تنبيه
+        for (Product p : products) {
+            if (p.getExpiryDate().isBefore(today.plusDays(7))) {
+                result.add(p);
             }
         }
+        return result;
     }
 
-    //تنبيه الكمية القليلة
-    public void checkLowStock() { // ميثود للتنبيه
+    public List<Product> checkLowStock() {
+         
+        List<Product> result = new ArrayList<>();
 
-        for (Product p : products) { // بنلف على المنتجات
-            if (p.getQuantity() <= 5) { // لو الكمية قليلة
-                System.out.println("Product الكمية قليلة: " + p.getName()); // نطبع تنبيه
+        for (Product p : products) {
+            if (p.getQuantity() <= 5) {
+                result.add(p);
             }
         }
+        return result;
     }
 }

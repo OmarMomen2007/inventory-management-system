@@ -1,53 +1,52 @@
-package main.model; // تحديد الباكدج (لازم نفس مكان الملف)
 
-import java.time.LocalDate; // استيراد LocalDate للتعامل مع التواريخ
+package main.model; 
 
-public class order { // كلاس يمثل طلب شراء
+import java.time.LocalDate; 
 
-    private int orderId; // رقم الطلب
-    private String username; // اسم العميل اللي عمل الطلب
-    private Product product; // المنتج نفسه (مش اسمه بس)
-    private int quantity; // الكمية المطلوبة
-    private double totalPrice; // السعر الكلي
-    private LocalDate orderDate; // تاريخ الطلب
+public class order { 
 
-    public order(int orderId, String username, Product product, int quantity) { // constructor لإنشاء طلب
+    private int orderId; 
+    private String username; 
+    private Product product; 
+    private int quantity; 
+    private double totalPrice; 
+    private LocalDate orderDate; 
 
-        this.orderId = orderId; // تخزين رقم الطلب
-        this.username = username; // تخزين اسم المستخدم
-        this.product = product; // تخزين المنتج كامل (object)
-        this.quantity = quantity; // تخزين الكمية
-        this.totalPrice = product.getPrice() * quantity; // حساب السعر الكلي
-        this.orderDate = LocalDate.now(); // تاريخ الطلب (اليوم)
+    public order(int orderId, String username, Product product, int quantity) {
+    this.orderId = orderId;
+    this.username = username;
+    this.product = product;
+    this.quantity = quantity;
+    this.totalPrice = product.getPrice() * quantity;
+    this.orderDate = LocalDate.now();
+}
 
-    }
-
-    public int getOrderId() { // ترجع رقم الطلب
+    public int getOrderId() { 
         return orderId;
     }
 
-    public String getUsername() { // ترجع اسم المستخدم
+    public String getUsername() { 
         return username;
     }
 
-    public Product getProduct() { // ترجع المنتج
+    public Product getProduct() { 
         return product;
     }
 
-    public int getQuantity() { // ترجع الكمية
+    public int getQuantity() { 
         return quantity;
     }
 
-    public double getTotalPrice() { // ترجع السعر الكلي
+    public double getTotalPrice() { 
         return totalPrice;
     }
 
-    public LocalDate getOrderDate() { // ترجع تاريخ الطلب
+    public LocalDate getOrderDate() { 
         return orderDate;
     }
 
     @Override
-    public String toString() { // تحويل الطلب لنص (مهم للـ report)
+    public String toString() { 
         return "Order{" +
                 "id=" + orderId +
                 ", user='" + username + '\'' +
@@ -58,3 +57,4 @@ public class order { // كلاس يمثل طلب شراء
                 '}';
     }
 }
+
