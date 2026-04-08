@@ -1,7 +1,6 @@
 package main.gui;
-
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 public class RoleSelectionFrame extends JFrame {
 
@@ -43,7 +42,7 @@ public class RoleSelectionFrame extends JFrame {
         // Client Button Action
         clientBtn.addActionListener(e -> {
             selectedRole = "CLIENT";
-            new LoginFrame(); 
+            new ClientDashboard();
             dispose();
         });
 

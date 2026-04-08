@@ -1,9 +1,9 @@
 package main.service;
 
-import java.time.LocalDate; 
-import java.util.ArrayList; 
-import java.util.Scanner; 
-import main.model.Product; 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Scanner;
+import main.model.Product;
 import main.model.client; 
 import main.model.order; 
 
@@ -44,10 +44,29 @@ public class ClientService {
         System.out.print("Enter password: ");
         String password = input.nextLine();
 
-        clients.add(new client(username, password));
+        clients.add(new client(username, "test@mail.com", password));
 
         System.out.println("User Registered!");
     }
+    // ================= REGISTER CLIENT =================
+    public void registerClient(String name, String email, String password) {
+    clients.add(new client(name, email, password));
+    System.out.println("Client Registered!");
+    }
+    // ================= UPDATE CLIENT =================
+    public void updateClient(String name, String email, String password) {
+
+    if (clients.isEmpty()) {
+        System.out.println("No clients found!");
+        return;
+    }
+
+    client c = clients.get(0);
+
+    c.editData(name, email, password);
+
+    System.out.println("Client Updated!");
+}
 
     // ================= LOGIN =================
     public void login() {
@@ -64,7 +83,7 @@ public class ClientService {
 
             for (client c : clients) {
 
-                if (c.getUsername().equals(username) && c.getPassword().equals(password)) {
+                if (c.getName().equals(username) && c.getPassword().equals(password)) {
                     currentClient = c;
                     System.out.println("Login successful!");
                     found = true;
@@ -92,61 +111,51 @@ public class ClientService {
         System.out.print("Enter new password: ");
         String newPass = input.nextLine();
 
-        currentClient.editData(newUser, newPass);
+        currentClient.editData(newUser, "updated@mail.com", newPass);
 
         System.out.println("Data updated!");
     }
 
-    // ================= CREATE ORDER =================
-    public void createOrder() {
+   // ================= CREATE ORDER =================
+public void createOrder(String productName, int qty) {
 
-        if (currentClient == null) {
-            System.out.println("Login first!");
-            return;
-        }
-
-        System.out.println("\nAvailable Products:");
-
-        for (Product p : products) {
-            System.out.println(p.getId() + " - " + p.getName() +
-                    " - Price: " + p.getPrice() +
-                    " - Qty: " + p.getQuantity());
-        }
-
-        System.out.print("Enter product id: ");
-        int id = input.nextInt();
-
-        System.out.print("Enter quantity: ");
-        int qty = input.nextInt();
-        input.nextLine();
-
-        Product selected = null;
-
-        for (Product p : products) {
-            if (p.getId() == id) {
-                selected = p;
-                break;
-            }
-        }
-
-        if (selected == null) {
-            System.out.println("Product not found!");
-            return;
-        }
-
-        if (qty > selected.getQuantity()) {
-            System.out.println("Not enough quantity!");
-            return;
-        }
-
-        
-        order newOrder = new order(nextOrderId++, currentClient.getUsername(), selected, qty);
-
-        orders.add(newOrder);
-
-        
-        selected.setQuantity(selected.getQuantity() - qty);
-
-        System.out.println("Order created successfully!");
+    if (currentClient == null) {
+        System.out.println("Login first!");
+        return;
     }
+
+    Product selected = null;
+
+    for (Product p : products) {
+        if (p.getName().equalsIgnoreCase(productName)) {
+            selected = p;
+            break;
+        }
+    }
+
+    if (selected == null) {
+        System.out.println("Product not found!");
+        return;
+    }
+
+    if (qty > selected.getQuantity()) {
+        System.out.println("Not enough quantity!");
+        return;
+    }
+
+    // خصم الكمية
+    selected.setQuantity(selected.getQuantity() - qty);
+
+    // إنشاء order
+    order newOrder = new order(nextOrderId++, currentClient.getName(), selected, qty);
+
+    orders.add(newOrder);
+
+    System.out.println("Order created!");
 }
+}
+
+
+
+
+

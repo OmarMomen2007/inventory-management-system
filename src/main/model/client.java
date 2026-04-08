@@ -1,25 +1,32 @@
-package main.model; 
+package main.model;
 
-public class client { 
+public class client {
 
-    private String username; 
-    private String password; 
+    private String name;
+    private String email;
+    private String password;
 
-    public client(String username, String password) { 
-        this.username = username; 
-        this.password = password; 
+    public client(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
     }
 
-    public String getUsername() { 
-        return username; 
+    public String getName() {
+        return name;
     }
 
-    public String getPassword() { 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
         return password;
     }
 
-    public void editData(String newUsername, String newPassword) { 
-        this.username = newUsername; 
-        this.password = newPassword; 
+    public void editData(String newName, String newEmail, String newPassword) {
+        this.name = newName;
+        this.email = newEmail;
+        this.password = newPassword;
     }
 }
