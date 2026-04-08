@@ -1,12 +1,12 @@
 package main;
 
-import main.gui.LoginFrame;
+import main.gui.RoleSelectionFrame;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        new LoginFrame();
+        new RoleSelectionFrame();
 
     }
 }

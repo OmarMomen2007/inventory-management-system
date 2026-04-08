@@ -98,6 +98,18 @@ public class ProductService {
 
         return result;
     }
+    public List<Product> searchByProductionDate(java.time.LocalDate date) {
+
+        List<Product> result = new ArrayList<>();
+
+        for (Product p : products) {
+            if (p.getProductionDate().isBefore(date)) {
+                result.add(p);
+            }
+        }
+
+        return result;
+    }
 
     public List<Product> checkExpiry() {
 

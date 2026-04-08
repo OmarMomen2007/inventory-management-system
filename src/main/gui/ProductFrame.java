@@ -1,8 +1,3 @@
-//=========================================================================
-
-//                  This File Complete No one Edit on it   (Abdelrhman Taha)
-
-//=========================================================================
 package main.gui;
 
 import javax.swing.*;
@@ -27,6 +22,7 @@ public class ProductFrame extends JFrame {
         setTitle("Product Management");
         setSize(900,650);
         setLayout(null);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         addLabel("ID:", 30);
@@ -44,12 +40,13 @@ public class ProductFrame extends JFrame {
         addLabel("Category:", 190);
         categoryField = addField(150, 190);
 
-        addLabel("Production:", 230);
-        productionField = addField(150, 230);
+        addLabel("Production (YYYY-MM-DD):", 230);
+        productionField = addField(200, 230);
 
-        addLabel("Expiry:", 270);
-        expiryField = addField(150, 270);
+        addLabel("Expiry (YYYY-MM-DD):", 270);
+        expiryField = addField(200, 270);
 
+        //Buttons
         JButton addBtn = new JButton("Add");
         addBtn.setBounds(400, 30, 150, 30);
         add(addBtn);
@@ -70,18 +67,23 @@ public class ProductFrame extends JFrame {
         searchCatBtn.setBounds(400, 190, 150, 30);
         add(searchCatBtn);
 
-        JButton searchDateBtn = new JButton("Search Expiry");
-        searchDateBtn.setBounds(400, 230, 150, 30);
-        add(searchDateBtn);
+        JButton searchExpiryBtn = new JButton("Search Expiry");
+        searchExpiryBtn.setBounds(400, 230, 150, 30);
+        add(searchExpiryBtn);
+
+        JButton searchProdBtn = new JButton("Search Production");
+        searchProdBtn.setBounds(400, 270, 150, 30);
+        add(searchProdBtn);
 
         JButton alertBtn = new JButton("Check Alerts");
-        alertBtn.setBounds(400, 270, 150, 30);
+        alertBtn.setBounds(400, 310, 150, 30);
         add(alertBtn);
 
         JButton refreshBtn = new JButton("Refresh");
-        refreshBtn.setBounds(400, 310, 150, 30);
+        refreshBtn.setBounds(400, 350, 150, 30);
         add(refreshBtn);
 
+        //Table
         model = new DefaultTableModel();
         model.addColumn("ID");
         model.addColumn("Name");
@@ -93,8 +95,10 @@ public class ProductFrame extends JFrame {
 
         table = new JTable(model);
         JScrollPane pane = new JScrollPane(table);
-        pane.setBounds(30, 370, 800, 200);
+        pane.setBounds(30, 420, 800, 180);
         add(pane);
+
+        //Actions
 
         addBtn.addActionListener(e -> {
             try {
@@ -119,22 +123,30 @@ public class ProductFrame extends JFrame {
         });
 
         updateBtn.addActionListener(e -> {
-            String msg = productService.updateProduct(
-                    Integer.parseInt(idField.getText()),
-                    nameField.getText(),
-                    Integer.parseInt(quantityField.getText()),
-                    Double.parseDouble(priceField.getText())
-            );
+            try {
+                String msg = productService.updateProduct(
+                        Integer.parseInt(idField.getText()),
+                        nameField.getText(),
+                        Integer.parseInt(quantityField.getText()),
+                        Double.parseDouble(priceField.getText())
+                );
 
-            JOptionPane.showMessageDialog(this, msg);
-            loadTable(productService.getAllProducts());
+                JOptionPane.showMessageDialog(this, msg);
+                loadTable(productService.getAllProducts());
+            } catch(Exception ex) {
+                JOptionPane.showMessageDialog(this, "Invalid input");
+            }
         });
 
         deleteBtn.addActionListener(e -> {
-            String msg = productService.deleteProduct(Integer.parseInt(idField.getText()));
-            JOptionPane.showMessageDialog(this, msg);
+            try {
+                String msg = productService.deleteProduct(Integer.parseInt(idField.getText()));
+                JOptionPane.showMessageDialog(this, msg);
 
-            loadTable(productService.getAllProducts());
+                loadTable(productService.getAllProducts());
+            } catch(Exception ex) {
+                JOptionPane.showMessageDialog(this, "Invalid ID");
+            }
         });
 
         searchNameBtn.addActionListener(e -> {
@@ -145,12 +157,22 @@ public class ProductFrame extends JFrame {
             loadTable(productService.searchByCategory(categoryField.getText()));
         });
 
-        searchDateBtn.addActionListener(e -> {
+        searchExpiryBtn.addActionListener(e -> {
             try {
                 LocalDate d = LocalDate.parse(expiryField.getText());
                 loadTable(productService.searchByExpiryDate(d));
             } catch(Exception ex) {
-                JOptionPane.showMessageDialog(this, "Wrong date format");
+                JOptionPane.showMessageDialog(this, "Wrong date format YYYY-MM-DD");
+            }
+        });
+
+        //NEW FEATURE
+        searchProdBtn.addActionListener(e -> {
+            try {
+                LocalDate d = LocalDate.parse(productionField.getText());
+                loadTable(productService.searchByProductionDate(d));
+            } catch(Exception ex) {
+                JOptionPane.showMessageDialog(this, "Wrong date format YYYY-MM-DD");
             }
         });
 
@@ -198,7 +220,7 @@ public class ProductFrame extends JFrame {
 
     private void addLabel(String text, int y) {
         JLabel label = new JLabel(text);
-        label.setBounds(30, y, 150, 30);
+        label.setBounds(30, y, 180, 30);
         add(label);
     }
 
