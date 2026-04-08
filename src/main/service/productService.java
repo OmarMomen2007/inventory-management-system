@@ -5,9 +5,9 @@
 //=========================================================================
 package main.service;
 
-import main.model.Product;
 import java.util.ArrayList;
 import java.util.List;
+import main.model.Product;
 
 public class ProductService {
 

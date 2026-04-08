@@ -1,11 +1,10 @@
 package main.gui;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
 import java.time.LocalDate;
 import java.util.List;
-
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import main.model.Product;
 import main.service.ProductService;
 
